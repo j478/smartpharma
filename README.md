@@ -17,5 +17,4 @@ clone the repository, download the requirements, and run test server in /backend
 $> git clone https://github.com/j478/smartpharma.git
 $> pip install -r requirements.txt
 $> python manage.py runserver
-
 ```
