@@ -1,6 +1,6 @@
-#Smartpharma
+# Smartpharma
 
-#Requirements
+# Requirements
 ```
 asgiref==3.5.0
 Django==4.0.2
