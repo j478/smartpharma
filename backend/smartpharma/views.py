@@ -16,10 +16,11 @@ class MedsView(viewsets.ModelViewSet):
             return Meds.objects.order_by('prodNum')[0:int(length)]
     """
 
-    def get(self, request, *args, **kwagrgs):
-        serializer = MedsSerializer(instance=self.queryset)
-        data = serializer.data
-        return Response(data)
+    def get(self, request, *args, **kwargs):
+        #serializer = MedsSerializer(instance=self.queryset)
+        #data = serializer.data
+        #return Response(data)
+        return self.list(request, *args, **kwargs)
 
-    def post():
-        asdf = 1
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
