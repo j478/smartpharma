@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Smartpharma
+from .models import Meds
 
-class SmartpharmaSerializer(serializers.ModelSerializer):
+class MedsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Smartpharma
-        fields = ("prodName", "prodNum", "prodColor")
+        model = Meds
+        fields = ("prodNum", "prodName", "amtInStock")

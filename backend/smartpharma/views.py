@@ -1,14 +1,25 @@
 from django.shortcuts import render
-from .serializers import SmartpharmaSerializer
+from .serializers import MedsSerializer
 from rest_framework import viewsets
-from .models import Smartpharma
+from rest_framework.response import Response
+from .models import Meds
 
 # Create your views here.
-class SmartpharmaView(viewsets.ModelViewSet):
-    serializer_class = SmartpharmaSerializer
-    queryset = None
+class MedsView(viewsets.ModelViewSet):
+    serializer_class = MedsSerializer
+    queryset = Meds.objects.all()
 
+    """
     def get_queryset(self):
         length = self.request.query_params.get('len')
         if length is not None:
-            return Smartpharma.objects.order_by('prodNum')[0:int(length)]
+            return Meds.objects.order_by('prodNum')[0:int(length)]
+    """
+
+    def get(self, request, *args, **kwagrgs):
+        serializer = MedsSerializer(instance=self.queryset)
+        data = serializer.data
+        return Response(data)
+
+    def post():
+        asdf = 1

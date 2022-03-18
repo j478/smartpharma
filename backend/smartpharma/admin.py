@@ -1,6 +1,8 @@
 from django.contrib import admin
-from .models import Smartpharma
+from .models import Meds
+
 # Register your models here.
-class SmartpharmaAdmin(admin.ModelAdmin):
-    list_display = ("prodName", "prodNum", "prodColor")
-admin.site.register(Smartpharma, SmartpharmaAdmin)
+class MedsAdmin(admin.ModelAdmin):
+    list_display = ("prodNum", "prodName", "amtInStock")
+    
+admin.site.register(Meds, MedsAdmin)

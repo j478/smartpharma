@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework.urlpatterns import format_suffix_patterns
 from smartpharma import views as views_smartpharma
 
 router = routers.DefaultRouter()
-router.register(r'smartpharma', views_smartpharma.SmartpharmaView, 'smartpharma')
+router.register(r'medlist', views_smartpharma.MedsView, 'medlist')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls))
