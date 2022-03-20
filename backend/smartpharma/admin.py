@@ -3,6 +3,6 @@ from .models import Meds
 
 # Register your models here.
 class MedsAdmin(admin.ModelAdmin):
-    list_display = ("prodNum", "prodName", "amtInStock")
+    list_display = ("prodName", "amtPerscribed", "amtInStock")
     
 admin.site.register(Meds, MedsAdmin)

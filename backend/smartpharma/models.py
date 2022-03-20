@@ -2,8 +2,8 @@ from django.db import models
 
 # Create your models here.
 class Meds(models.Model):
-	prodNum = models.IntegerField()
 	prodName = models.TextField()
+	amtPerscribed = models.IntegerField()
 	amtInStock = models.IntegerField()
 
 	def __str__(self):
