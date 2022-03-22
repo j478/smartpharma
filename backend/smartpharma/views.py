@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from .serializers import MedsSerializer
+from .serializers import MedsSerializer, AccountSerializer
 from rest_framework import viewsets
-from rest_framework.response import Response
-from .models import Meds
+from rest_framework.exceptions import PermissionDenied
+from .models import Meds, Accounts
+from passlib.hash import pbkdf2_sha256 as sha
 
 # Create your views here.
 class MedsView(viewsets.ModelViewSet):
@@ -24,3 +25,15 @@ class MedsView(viewsets.ModelViewSet):
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+class CreateAccountView(viewsets.ModelViewSet):
+    serializer_class = AccountSerializer
+    queryset = Accounts.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        usr = request.POST['username']
+        if Accounts.userExists(Accounts, username=usr) == False:
+            newPass = sha.encrypt(request.POST['password'], rounds=12000, salt_size=32)
+            Accounts.objects.create(username=usr,password=newPass)
+
+        raise PermissionDenied('Username already exists')

@@ -8,3 +8,17 @@ class Meds(models.Model):
 
 	def __str__(self):
 		return "productName: " + str(self.prodName)
+
+class Accounts(models.Model):
+	username = models.TextField()
+	password = models.TextField()
+
+	def __str__(self):
+		return "username: " + str(self.username)
+
+	def userExists(self, username):
+		try:
+			self.objects.get(username=username)
+			return True 
+		except self.DoesNotExist:
+			return False
