@@ -11,11 +11,25 @@ class Meds(models.Model):
 		return "productName: " + str(self.prodName)
 
 class Accounts(models.Model):
-	username = models.TextField()
+	username = models.TextField(unique=True)
 	password = models.TextField()
+
+	def usernameString(self):
+		return str(self.username)
 
 	def __str__(self):
 		return "username: " + str(self.username)
 
 	def verifyPass(self, rawPass):
 		return sha.verify(rawPass, self.password)
+
+class authTokens(models.Model):
+	token = models.CharField(unique=True, max_length=40)
+	user = models.TextField()
+	dateTime = models.CharField(max_length=40)
+
+	def __str__(self):
+		return "token: " + str(self.token)
+
+	def key(self):
+		return str(self.token)

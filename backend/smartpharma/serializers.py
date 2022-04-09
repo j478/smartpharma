@@ -8,7 +8,7 @@ class MedsSerializer(serializers.ModelSerializer):
         model = Meds
         fields = ("prodName", "amtPerscribed", "amtInStock")
 
-class AccountSerializer(serializers.ModelSerializer):
+class VerifyLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = Accounts
         fields = ("username", "password")
@@ -25,7 +25,7 @@ class CreateAccountSerializer(serializers.ModelSerializer):
             raise PermissionDenied('username already exists!') #We dont want to create duplicate accounts, so we error out
         except Accounts.DoesNotExist:
             Account = Accounts.objects.create(
-               username=validated_data['username'],
+               username = validated_data['username'],
                password = sha.encrypt(validated_data['password'], rounds=12000, salt_size=32) #encrypts password with sha_256
              )
 

@@ -1,7 +1,11 @@
-from django.shortcuts import render
-from .serializers import CreateAccountSerializer, MedsSerializer, AccountSerializer
+from .serializers import CreateAccountSerializer, MedsSerializer
 from rest_framework import viewsets
 from .models import Meds, Accounts
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
+from .authentication import Authenticator
 
 # Create your views here.
 class MedsView(viewsets.ModelViewSet):
@@ -28,6 +32,22 @@ class CreateAccountView(viewsets.ModelViewSet):
     serializer_class = CreateAccountSerializer
     queryset = Accounts.objects.all()
 
-class VerifyLoginView(viewsets.ModelViewSet):
-    serializer_class = AccountSerializer
-    queryset = Accounts.objects.all()
+@csrf_exempt
+@api_view(['POST'])
+def VerifyLoginView(request):
+    usr = request.data.get("username")
+    pswd = request.data.get("password")
+    if usr is None and pswd is None:
+        return Response({'error':'Please provide user & password'},
+                        status=status.HTTP_400_BAD_REQUEST)
+    
+
+    account = Authenticator.authenticate(Authenticator, username=usr, password=pswd)
+
+    if account == None:
+        return Response({'error': 'Invalid credentials'},
+                        status=status.HTTP_404_NOT_FOUND)
+    
+    authToken = Authenticator.get_or_create(Authenticator, account)
+    return Response({'token':authToken.key()},
+                    status=status.HTTP_200_OK)
