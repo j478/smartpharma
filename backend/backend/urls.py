@@ -22,7 +22,7 @@ from smartpharma import views as views_smartpharma
 router = routers.DefaultRouter()
 router.register(r'medlist', views_smartpharma.MedsView, 'medlist')
 router.register(r'create-account', views_smartpharma.CreateAccountView,'create-account')
-
+router.register(r'verify-login', views_smartpharma.VerifyLoginView,'verify-login')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

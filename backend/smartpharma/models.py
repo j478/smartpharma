@@ -1,4 +1,5 @@
 from django.db import models
+from passlib.hash import pbkdf2_sha256 as sha
 
 # Create your models here.
 class Meds(models.Model):
@@ -16,9 +17,5 @@ class Accounts(models.Model):
 	def __str__(self):
 		return "username: " + str(self.username)
 
-	def userExists(self, username):
-		try:
-			self.objects.get(username=username)
-			return True 
-		except self.DoesNotExist:
-			return False
+	def verifyPass(self, rawPass):
+		return sha.verify(rawPass, self.password)
