@@ -2,6 +2,6 @@
 /backend/backend/.env
 /env
 PAT.txt
-/backend/__pycache__
-/smartpharma/__pycache__
-/smartpharma/migrations
+/backend/backend/__pycache__
+/backend/smartpharma/__pycache__
+/backend/smartpharma/migrations
