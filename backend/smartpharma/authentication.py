@@ -1,6 +1,6 @@
 from hashlib import new
 from .models import Accounts
-from .models import authTokens
+from .models import AuthTokens
 from secrets import token_urlsafe
 from datetime import datetime
 
@@ -17,13 +17,30 @@ class Authenticator:
     
     def get_or_create(self, account):
         try:
-            currentAuthToken = authTokens.objects.get(user=Accounts.usernameString(account))
+            currentAuthToken = AuthTokens.objects.get(user=Accounts.usernameString(account))
             return currentAuthToken
-        except authTokens.DoesNotExist:
-            newAuthToken = authTokens.objects.create(
+        except AuthTokens.DoesNotExist:
+            newAuthToken = AuthTokens.objects.create(
                 token = token_urlsafe(20),
                 user = Accounts.usernameString(account),
                 dateTime = datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
             )
 
             return newAuthToken
+    
+    def get_account_with_token(self, inToken):
+        try:
+            tokenUser = AuthTokens.objects.get(token=inToken)
+            user = tokenUser.userString()
+            return Accounts.objects.get(username=user)
+        except AuthTokens.DoesNotExist:
+            return None
+
+    def logout_token(self, inToken):
+        try:
+            tokenUser = AuthTokens.objects.get(token=inToken)
+            tokenUser.delete()
+            return True
+        except AuthTokens.DoesNotExist:
+            return False
+        

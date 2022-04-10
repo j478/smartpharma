@@ -13,9 +13,17 @@ class Meds(models.Model):
 class Accounts(models.Model):
 	username = models.TextField(unique=True)
 	password = models.TextField()
+	email = models.CharField(max_length=30)
+	phoneNumber = models.CharField(max_length=10)
 
 	def usernameString(self):
 		return str(self.username)
+	
+	def emailString(self):
+		return str(self.email)
+
+	def phoneNumString(self):
+		return str(self.phoneNumber)
 
 	def __str__(self):
 		return "username: " + str(self.username)
@@ -23,7 +31,7 @@ class Accounts(models.Model):
 	def verifyPass(self, rawPass):
 		return sha.verify(rawPass, self.password)
 
-class authTokens(models.Model):
+class AuthTokens(models.Model):
 	token = models.CharField(unique=True, max_length=40)
 	user = models.TextField()
 	dateTime = models.CharField(max_length=40)
@@ -33,3 +41,6 @@ class authTokens(models.Model):
 
 	def key(self):
 		return str(self.token)
+
+	def userString(self):
+		return str(self.user)

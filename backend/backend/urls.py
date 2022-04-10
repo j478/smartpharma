@@ -16,15 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from rest_framework.urlpatterns import format_suffix_patterns
 from smartpharma import views as views_smartpharma
 
 router = routers.DefaultRouter()
 router.register(r'medlist', views_smartpharma.MedsView, 'medlist')
 router.register(r'create-account', views_smartpharma.CreateAccountView,'create-account')
+router.register(r'verify-login', views_smartpharma.VerifyLoginView,'verify-login')
+router.register(r'verify-token', views_smartpharma.VerifyTokenView,'verify-token')
+router.register(r'logout', views_smartpharma.LogoutView, 'logout')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('verify-login', views_smartpharma.VerifyLoginView)
 ]

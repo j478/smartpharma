@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Meds, Accounts
+from .models import AuthTokens, Meds, Accounts
 from passlib.hash import pbkdf2_sha256 as sha
 from rest_framework.exceptions import PermissionDenied
 
@@ -30,3 +30,8 @@ class CreateAccountSerializer(serializers.ModelSerializer):
              )
 
             return Account
+
+class AuthTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuthTokens
+        fields = ('token', 'user', 'dateTime')
